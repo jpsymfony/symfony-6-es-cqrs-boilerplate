@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\User\Infrastructure\ReadModel\Mysql;
 
 use App\User\Domain\Repository\CheckUserByEmailInterface;
+use App\User\Domain\Repository\FindUserByEmailInterface;
 use App\User\Domain\Repository\GetUserCredentialsByEmailInterface;
 use App\User\Domain\ValueObject\Email;
 use App\Shared\Infrastructure\Persistence\ReadModel\Exception\NotFoundException;
@@ -16,7 +17,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\UuidInterface;
 
-final class MysqlReadModelUserRepository extends MysqlRepository implements CheckUserByEmailInterface, GetUserCredentialsByEmailInterface
+final class MysqlReadModelUserRepository extends MysqlRepository implements FindUserByEmailInterface, CheckUserByEmailInterface, GetUserCredentialsByEmailInterface
 {
     protected function setEntityManager(): void
     {

@@ -2,17 +2,19 @@ version: '3.7'
 
 services:
 
-  nginx:
-    ports:
-      - "80:80"
+#  nginx:
+#    ports:
+#      - "80:80"
 
   php:
     ports:
+      - "80:80"
       - "2323:22"
-#      - "9003:9003"
-    # Allows to debug php script run inside PHP container
     environment:
       PHP_IDE_CONFIG: serverName=es.local
+      XDEBUG_CONFIG: client_host=172.17.0.1 client_port=9003 idekey=PHPSTORM discover_client_host=0 start_with_request=yes max_nesting_level=1024
+      XDEBUG_MODE: debug
+
   blackfire:
     image: blackfire/blackfire
     env_file:
@@ -32,7 +34,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:7.11.0
     ports:
-      - 5601:5601
+      - "5601:5601"
     volumes:
       - "./etc/dev/kibana/config:/usr/share/kibana/config/kibana.yml"
 

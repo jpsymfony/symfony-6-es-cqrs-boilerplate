@@ -48,7 +48,6 @@ class SignUpController extends AbstractRenderController
         $errorHTTPStatusCode = null;
         $afterErrorUuid = Uuid::uuid4()->toString();
 
-
         $uuid = $request->request->get('uuid');
         $email = $request->request->get('email');
         $password = $request->request->get('password');

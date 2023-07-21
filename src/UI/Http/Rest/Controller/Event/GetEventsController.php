@@ -43,10 +43,6 @@ class GetEventsController extends QueryController
      *
      * @Security(name="Bearer")
      * )
-     * @OA\Response(
-     *     response=409,
-     *     description="Conflict"
-     * )
      *
      * @OA\Parameter(ref="#/components/parameters/page")
      * @OA\Parameter(ref="#/components/parameters/limit")

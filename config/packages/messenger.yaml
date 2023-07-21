@@ -31,6 +31,8 @@ framework:
                     queues:
                         events:
                             binding_keys: ['#']
+                        events_debug:
+                            binding_keys: [ '#' ]
 
             users:
                 dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
@@ -46,6 +48,9 @@ framework:
                     queues:
                         users:
                             binding_keys: ['#.User.#']
+                        users_debug:
+                            binding_keys: [ '#.User.#' ]
+
             failed:
                 dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
                 options:

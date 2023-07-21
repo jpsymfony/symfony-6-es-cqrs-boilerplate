@@ -2,19 +2,17 @@ version: '3.7'
 
 services:
 
-  nginx:
-    image: nginx:1.17-alpine
-    volumes:
-      - ./etc/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./public:/app/public:ro
-    depends_on:
-      - php
+#  nginx:
+#    image: nginx:1.17-alpine
+#    volumes:
+#      - ./etc/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+#      - ./public:/app/public:ro
+#    depends_on:
+#      - php
 
   code:
-    build:
-      dockerfile: etc/artifact/Dockerfile
-      context: .
-      target: php-dev
+    build: docker/php
+    working_dir: /app
     volumes:
       - ./:/app:rw,delegated
       # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
@@ -24,13 +22,8 @@ services:
       - /app/var/sessions/
 
   php:
-    build:
-      dockerfile: etc/artifact/Dockerfile
-      context: .
-      target: php-dev
-    environment:
-      - XDEBUG_MODE=debug
-      - XDEBUG_CLIENT_HOST=host.docker.internal
+    build: docker/php
+    working_dir: /app
     volumes:
       - ./:/app:rw,delegated
       # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
@@ -44,10 +37,8 @@ services:
       - elasticsearch
 
   workers_events:
-    build:
-      dockerfile: etc/artifact/Dockerfile
-      context: .
-      target: php-dev
+    build: docker/php
+    working_dir: /app
     volumes:
       - ./:/app:rw,delegated
       # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
@@ -60,11 +51,10 @@ services:
       - mysql
       - rmq
       - elasticsearch
+
   workers_users:
-    build:
-      dockerfile: etc/artifact/Dockerfile
-      context: .
-      target: php-dev
+    build: docker/php
+    working_dir: /app
     volumes:
       - ./:/app:rw,delegated
       # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
@@ -79,7 +69,7 @@ services:
       - elasticsearch
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8.0.33
     command: --default-authentication-plugin=mysql_native_password
     volumes:
      - "./etc/ci/mysql:/etc/mysql/conf.d"
